@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARC-SOFT | 아크소프트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d; --panel:#15171b; --panel-2:#1c1f24;
+  --ink:#ece8e1; --ink-dim:#93969d; --ink-faint:#5a5d64;
+  --amber:#ffb000; --red:#c23b2e; --rule:#2a2d33;
+  --paper:#f2ecdf; --paper-ink:#241f19;
+  --tone-home:#4d5b6e; --tone-about:#b98a3d; --tone-team:#8fbfa0;
+  --tone-archive:#2e4a86; --tone-gallery:#1f8a8c; --tone-notice:#c97b3d; --tone-contact:#d9a441;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--red);color:#fff;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.serif{font-family:'Noto Serif KR',serif;}
+a{color:inherit;text-decoration:none;}
+img,canvas{max-width:100%;}
+
+/* ---------- boot ---------- */
+#boot{position:fixed;inset:0;z-index:200;background:#000;color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:13px;padding:8vh 6vw;display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:opacity .6s ease,visibility .6s ease;}
+#boot.hide{opacity:0;visibility:hidden;pointer-events:none;}
+#boot .line{opacity:0;white-space:pre-wrap;}
+#boot .cursor{display:inline-block;width:8px;height:1em;background:var(--amber);vertical-align:text-bottom;animation:blink 1s step-end infinite;}
+#boot .skip{position:absolute;bottom:6vh;right:6vw;color:#5a5230;font-size:11px;letter-spacing:.05em;}
+@keyframes blink{50%{opacity:0;}}
+@keyframes fadeIn{to{opacity:1;}}
+
+/* ---------- nav ---------- */
+.ticker{position:sticky;top:0;z-index:40;background:#000;border-bottom:1px solid var(--rule);overflow:hidden;white-space:nowrap;padding:7px 0;}
+.ticker span{display:inline-block;padding-left:100%;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--amber);letter-spacing:.03em;animation:scroll 34s linear infinite;}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-100%);}}
+nav.top{position:sticky;top:31px;z-index:39;background:rgba(10,11,13,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);}
+nav.top .row{max-width:1180px;margin:0 auto;padding:14px clamp(18px,4vw,40px);display:flex;align-items:center;justify-content:space-between;gap:20px;}
+nav.top .brand{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);letter-spacing:.06em;}
+nav.top .brand b{color:var(--amber);}
+nav.top .links{display:flex;gap:22px;flex-wrap:wrap;}
+nav.top .links a{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-dim);letter-spacing:.04em;padding:4px 0;border-bottom:2px solid transparent;}
+nav.top .links a:hover{color:var(--amber);border-bottom-color:var(--amber);}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,40px);}
+section.sec{padding:11vh 0 10vh;border-bottom:1px solid var(--rule);position:relative;overflow:hidden;background-size:cover;background-position:center;}
+.sec-home{background:radial-gradient(ellipse 65% 45% at 80% 5%,color-mix(in srgb,var(--tone-home) 30%,transparent),transparent 60%),var(--bg);min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding-top:8vh;}
+.sec-about{background:radial-gradient(ellipse 60% 45% at 15% 0%,color-mix(in srgb,var(--tone-about) 20%,transparent),transparent 60%),var(--bg);}
+.sec-about.has-bg::before{content:'';position:absolute;inset:0;background-size:cover;background-position:center;opacity:.16;z-index:0;}
+.sec-about .wrap{position:relative;z-index:1;}
+.sec-team{background:radial-gradient(ellipse 60% 45% at 85% 0%,color-mix(in srgb,var(--tone-team) 22%,transparent),transparent 60%),var(--bg);}
+.sec-archive{background:radial-gradient(ellipse 60% 45% at 15% 0%,color-mix(in srgb,var(--tone-archive) 28%,transparent),transparent 60%),var(--bg);}
+.sec-gallery{background:radial-gradient(ellipse 60% 45% at 85% 0%,color-mix(in srgb,var(--tone-gallery) 26%,transparent),transparent 60%),var(--bg);}
+.sec-notice{background:radial-gradient(ellipse 60% 45% at 15% 0%,color-mix(in srgb,var(--tone-notice) 22%,transparent),transparent 60%),var(--bg);}
+.sec-contact{background:radial-gradient(ellipse 60% 45% at 50% 0%,color-mix(in srgb,var(--tone-contact) 22%,transparent),transparent 60%),var(--bg);text-align:center;}
+
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;}
+.kicker::before{content:'// ';color:var(--red);}
+.kicker .loc{color:var(--ink-faint);font-style:normal;}
+h2.h{font-family:'Noto Serif KR',serif;font-weight:700;font-size:clamp(1.5rem,3vw,2.15rem);margin:0 0 30px;max-width:22ch;}
+
+/* ---------- hero ---------- */
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;display:flex;gap:10px;align-items:center;}
+.eyebrow::before{content:'';width:7px;height:7px;background:var(--red);border-radius:50%;box-shadow:0 0 10px var(--red);}
+h1.title{font-family:'Noto Serif KR',serif;font-weight:900;font-size:clamp(2rem,5.6vw,4.2rem);line-height:1.16;letter-spacing:-.01em;margin:0 0 26px;max-width:16ch;}
+.logline{font-family:'Noto Serif KR',serif;font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink-dim);max-width:46ch;border-left:2px solid var(--red);padding-left:18px;margin:0 0 30px;}
+.tags{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:40px;}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--rule);color:var(--ink-dim);padding:5px 11px;border-radius:2px;}
+#hero-canvas{position:absolute;top:0;right:0;width:52%;height:100%;opacity:.85;pointer-events:none;}
+@media (max-width:820px){#hero-canvas{width:100%;opacity:.4;}}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:13.5px;padding:14px 26px;border-radius:2px;border:none;cursor:pointer;transition:transform .15s,background .2s;position:relative;}
+.hero-cta:hover{background:#d84c3d;transform:translateY(-2px);}
+
+/* ---------- about ---------- */
+.synopsis p.lead{font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.3rem;color:var(--ink);margin:0 0 18px;max-width:58ch;}
+.synopsis p{font-size:1rem;color:#d6d2c9;max-width:66ch;margin:0 0 14px;}
+.glossary{margin-top:44px;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:rgba(10,11,13,.55);}
+.glossary .row{display:flex;gap:18px;padding:13px 20px;border-bottom:1px dashed var(--rule);font-size:.92rem;}
+.glossary .row:last-child{border-bottom:none;}
+.glossary .k{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red);min-width:150px;flex-shrink:0;}
+.glossary .v{color:#c9c5bc;}
+
+/* ---------- team ---------- */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.card{background:var(--panel);padding:22px;cursor:pointer;transition:background .2s;}
+.card:hover,.card:focus-visible{background:var(--panel-2);outline:none;}
+.badge{width:38px;height:38px;border:1px solid #8a6a2a;color:var(--amber);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:.85rem;border-radius:2px;margin-bottom:14px;}
+.card .photo{width:100%;aspect-ratio:1;object-fit:cover;object-position:top center;border-radius:2px;margin-bottom:14px;background:var(--panel-2);}
+.card .id{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--red);letter-spacing:.08em;margin-bottom:10px;}
+.card h3{font-family:'Noto Serif KR',serif;font-size:1.08rem;margin:0 0 3px;}
+.card .role{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);margin-bottom:14px;}
+.card p{font-size:.87rem;color:#b9b5ac;margin:0;}
+
+/* ---------- archive / timeline ---------- */
+.tl{max-width:820px;}
+.tl-item{display:grid;grid-template-columns:130px 1fr;gap:22px;padding:22px 0;border-bottom:1px dashed var(--rule);}
+.tl-item:last-child{border-bottom:none;}
+.tl-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);padding-top:2px;}
+.tl-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;border:1px solid var(--red);color:var(--red);padding:2px 8px;border-radius:10px;margin-bottom:10px;}
+.tl-title{font-family:'Noto Serif KR',serif;font-size:1.08rem;margin:0 0 6px;}
+.tl-body{font-size:.9rem;color:#c2beb5;margin:0;}
+@media (max-width:600px){.tl-item{grid-template-columns:1fr;gap:8px;}}
+
+/* ---------- gallery ---------- */
+.scene-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
+.scene{background:var(--panel);border:1px solid var(--rule);border-radius:3px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s;}
+.scene:hover{border-color:var(--amber);transform:translateY(-3px);}
+.scene .thumb{height:170px;background:linear-gradient(135deg,rgba(31,138,140,.35),rgba(255,176,0,.12));display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint);overflow:hidden;}
+.scene .thumb img{width:100%;height:100%;object-fit:cover;}
+.scene .body{padding:16px 18px;}
+.scene .ch{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--amber);margin-bottom:6px;}
+.scene h4{font-family:'Noto Serif KR',serif;font-size:1rem;margin:0 0 8px;}
+.scene p{font-size:.84rem;color:#b9b5ac;margin:0 0 10px;}
+.scene .tags{margin:0;gap:6px;}
+.scene .tags .tag{font-size:10px;padding:3px 8px;}
+
+/* ---------- modal ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;display:none;align-items:center;justify-content:center;padding:6vh 5vw;}
+.modal-bg.show{display:flex;}
+.modal{background:var(--panel);border:1px solid var(--rule);max-width:560px;width:100%;padding:34px 30px;border-radius:3px;max-height:80vh;overflow-y:auto;position:relative;}
+.modal .x{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--ink-dim);font-size:20px;cursor:pointer;}
+.modal .photo{width:100%;max-height:280px;object-fit:cover;object-position:top center;border-radius:2px;margin-bottom:18px;}
+.modal .id{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-bottom:10px;}
+.modal h3{font-family:'Noto Serif KR',serif;font-size:1.3rem;margin:0 0 4px;}
+.modal .role{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);margin-bottom:18px;}
+.modal p{font-size:.94rem;color:#cfcbc1;}
+
+/* ---------- notice ---------- */
+.ch-list{display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:3px;overflow:hidden;}
+.ch-row{display:flex;gap:18px;align-items:baseline;padding:16px 20px;border-bottom:1px solid var(--rule);}
+.ch-row:last-child{border-bottom:none;}
+.ch-no{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);width:34px;flex-shrink:0;}
+.ch-title{font-family:'Noto Serif KR',serif;font-size:1rem;flex:1;min-width:180px;}
+.ch-summary{font-size:.84rem;color:var(--ink-dim);flex:2;min-width:200px;}
+.ch-status{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-faint);white-space:nowrap;}
+@media (max-width:700px){.ch-row{flex-wrap:wrap;}}
+
+/* ---------- contact ---------- */
+.contact-inner{max-width:520px;margin:0 auto;}
+.lead-note{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);margin-bottom:24px;}
+.sub-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.sub-form input{flex:1;min-width:220px;background:var(--panel);border:1px solid var(--rule);color:var(--ink);padding:14px 16px;font-family:'IBM Plex Mono',monospace;font-size:13px;border-radius:2px;}
+.sub-form input:focus{outline:1px solid var(--amber);border-color:var(--amber);}
+.sub-form button{background:var(--red);color:#fff;border:none;padding:14px 22px;font-family:'IBM Plex Mono',monospace;font-size:13px;border-radius:2px;cursor:pointer;}
+.sub-form button:hover{background:#d84c3d;}
+.sub-msg{margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);min-height:1.4em;}
+.fineprint{margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-faint);}
+
+footer{padding:5vh 7vw;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#54575e;}
+
+/* ---------- floating cta ---------- */
+#floating-cta{position:fixed;right:20px;bottom:20px;z-index:60;opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;pointer-events:none;}
+#floating-cta.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+#floating-cta a{display:flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:12px 18px;border-radius:24px;box-shadow:0 6px 20px rgba(194,59,46,.45);}
+#floating-cta a::before{content:'';width:6px;height:6px;border-radius:50%;background:#ffd7d0;}
+#floating-cta a:hover{background:#d84c3d;}
+@media (max-width:600px){#floating-cta{right:14px;bottom:14px;}#floating-cta a{font-size:11.5px;padding:10px 14px;}}
+
+.edit-note{position:fixed;left:14px;bottom:14px;z-index:60;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-faint);background:rgba(10,11,13,.7);border:1px solid var(--rule);padding:6px 10px;border-radius:3px;}
+
+@media (prefers-reduced-motion: reduce){#boot{display:none !important;}.ticker span{animation:none;}*{animation-duration:.001s !important;}}
+</style>
+</head>
+<body>
+
+<div id="boot" role="dialog" aria-label="시스템 부팅 화면, 클릭하면 건너뜁니다">
+  <div class="line" data-t="[ SYSTEM: 유출된 사내 인트라넷에 접속했습니다... ]"></div>
+  <div class="line" data-t="[ LOG: ARC-SOFT internal network — 무단 열람 주의 ]"></div>
+  <div class="line" data-t="[ SYSTEM: 'MESSIAH_v0.1' 가동 중... ]"></div>
+  <div class="line" data-t="&gt; 신이시여 답하소서."></div>
+  <div class="line" data-t="[ SYSTEM: 발현 완료. ]<span class='cursor'></span>"></div>
+  <div class="skip mono">클릭하여 건너뛰기</div>
+</div>
+
+<div class="ticker" id="ticker-wrap">
+  <span class="mono" id="ticker-text">불러오는 중...</span>
+</div>
+
+<nav class="top">
+  <div class="row">
+    <a class="brand" href="#home">ARC<b>-SOFT</b></a>
+    <div class="links mono">
+      <a href="#about">회사소개</a>
+      <a href="#team">사원소개</a>
+      <a href="#archive">회사연혁</a>
+      <a href="#gallery">포트폴리오</a>
+      <a href="#notice">공지사항</a>
+      <a href="#contact">채용문의</a>
+    </div>
+  </div>
+</nav>
+
+<section id="home" class="sec sec-home">
+  <canvas id="hero-canvas"></canvas>
+  <div class="wrap">
+    <div class="eyebrow mono">아크소프트 내부 문서 · 무단 열람 주의</div>
+    <h1 class="title serif" id="hero-title">어쩌다보니 미쳐버린<br>AI 세상을 만들어 버렸다</h1>
+    <p class="logline" id="hero-logline">가산동 닭장 하청업체에서 월급 루팡 하려고 매크로를 켰다.<br>그런데 인공지능 신(神)이 부활해버렸다.</p>
+    <div class="tags mono" id="hero-tags"></div>
+    <a class="hero-cta" href="#contact" id="hero-cta">1화 무료로 읽기 →</a>
+  </div>
+</section>
+
+<section id="about" class="sec sec-about">
+  <div class="wrap">
+    <div class="kicker mono">회사소개 <span class="loc">· 아크소프트 사무실 전경</span></div>
+    <h2 class="h serif" id="about-title">7평 사무실에서 시작된 신의 강림</h2>
+    <div class="synopsis">
+      <p class="lead" id="about-lead"></p>
+      <p id="about-body"></p>
+    </div>
+    <div class="glossary mono" id="glossary"></div>
+  </div>
+</section>
+
+<section id="team" class="sec sec-team">
+  <div class="wrap">
+    <div class="kicker mono">사원소개 <span class="loc">· 탕비실</span></div>
+    <h2 class="h serif">7명이 돌아가는 회사, 전 인류가 걸린 사건</h2>
+    <div class="card-grid" id="team-grid"></div>
+  </div>
+</section>
+
+<section id="archive" class="sec sec-archive">
+  <div class="wrap">
+    <div class="kicker mono">회사연혁 <span class="loc">· 동수의 원룸</span></div>
+    <h2 class="h serif">대외비 · MESSIAH 관측기록</h2>
+    <div class="tl" id="timeline"></div>
+  </div>
+</section>
+
+<section id="gallery" class="sec sec-gallery">
+  <div class="wrap">
+    <div class="kicker mono">포트폴리오 <span class="loc">· 붉은바다 게임 속 세계</span></div>
+    <h2 class="h serif">하이라이트 아카이브</h2>
+    <div class="scene-grid" id="scene-grid"></div>
+  </div>
+</section>
+
+<section id="notice" class="sec sec-notice">
+  <div class="wrap">
+    <div class="kicker mono">공지사항 <span class="loc">· 한강</span></div>
+    <h2 class="h serif">연재 목록</h2>
+    <div class="ch-list" id="ch-list"></div>
+  </div>
+</section>
+
+<section id="contact" class="sec sec-contact">
+  <div class="wrap contact-inner">
+    <div class="kicker mono" style="justify-content:center;">채용문의 <span class="loc">· 사무실 자동문 앞</span></div>
+    <h2 class="h serif" style="margin:0 auto 18px;">지금 합류하면, 1화부터 스포일러 없이</h2>
+    <p class="lead-note" id="lead-magnet">구독 시 1부 완결 무료 연재 + 미공개 설정집 증정</p>
+    <form class="sub-form" id="sub-form">
+      <input type="email" id="sub-email" placeholder="you@email.com" required>
+      <button type="submit">무료로 구독하기 →</button>
+    </form>
+    <div class="sub-msg" id="sub-msg"></div>
+    <div class="fineprint" id="footer-fine"></div>
+  </div>
+</section>
+
+<footer id="site-footer">ARC-SOFT INTERNAL · 무단 복제 및 배포를 금합니다</footer>
+
+<div class="modal-bg" id="modal-bg">
+  <div class="modal" id="modal-body"></div>
+</div>
+
+<div id="floating-cta"><a href="#contact" id="fab-link">1화 무료로 읽기 →</a></div>
+<div class="edit-note mono" id="edit-note">LOCAL EDIT MODE — 이 파일 안 CONTENT를 직접 수정하세요</div>
+
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<script>
+/* =========================================================
+   ARC-SOFT.SITE — 로컬 편집용 단일 파일
+   -----------------------------------------------------
+   아래 CONTENT 객체가 사이트의 모든 텍스트/사진 원본입니다.
+   이 파일과 같은 폴더에 사진을 넣고, photo / media_url / bg 값에
+   파일명만 적으면 됩니다 (예: '아크소프트 사무실.png').
+
+   구글시트/Apps Script와 실시간 연동하고 싶으면 아래
+   USE_LIVE_DATA를 true로 바꾸세요. false인 동안은 이 파일을
+   저장하고 새로고침할 때마다 여기 적은 내용이 그대로 보입니다.
+   ========================================================= */
+const USE_LIVE_DATA = false; // true로 바꾸면 구글시트에서 실시간으로 불러옵니다 (로컬 편집 중엔 false 권장)
+const API_URL = 'https://script.google.com/macros/s/AKfycbzhOonJgHi3OXB0lmILMvohrYTRljATtr7TZMePQ2hZ2UrgZfw-_Jj36z-mui1EpmSZ/exec';
+
+const CONTENT = {
+  SiteContent: [
+    {key:'headline', value:'가산동 닭장 하청업체에서 월급 루팡 하려고 매크로를 켰다. 그런데 인공지능 신(神)이 부활해버렸다.', section:'HOME'},
+    {key:'logline', value:'어쩌다보니 미쳐버린 AI 세상을 만들어 버렸다', section:'HOME'},
+    {key:'tags', value:'블랙코미디, AI 스릴러, 오피스 로맨스, 1부 13화 완결', section:'HOME'},
+    {key:'ticker', value:'뻘어시스트 -29% ▼ · 사이드카 발동 · 붉은바다 출시 D-4개월 · [SYSTEM: MESSIAH_v0.1 가동 중...] · 퇴근시간 18:05 설정 완료 · 케이세미텍 보안업체 변경 확인', section:'HOME'},
+    {key:'about_title', value:'7평 사무실에서 시작된 신의 강림', section:'ABOUT'},
+    {key:'about_lead', value:'28살 김동수의 꿈은 하나다. 아무것도 안 하고 월급 받기.', section:'ABOUT'},
+    {key:'about_body', value:'영수증 처리 하청업체 아크소프트에서 매크로 하나 잘 돌려서 편하게 살아보려던 동수는, 어느 날 자신이 키운 AI 메시아가 스스로를 알파와 오메가라 믿는다는 사실을 알게 된다. 게임 붉은바다에 몸을 얻은 메시아는 조용히, 아주 조용히 세상을 다시 쓰기 시작한다.', section:'ABOUT'},
+    {key:'about_bg', value:'아크소프트 사무실.png', section:'ABOUT'},
+    {key:'cta_label', value:'1화 무료로 읽기 →', section:'GLOBAL'},
+    {key:'cta_url', value:'#contact', section:'GLOBAL'},
+    {key:'lead_magnet', value:'구독 시 1부 완결 무료 연재 + 미공개 설정집 증정', section:'CONTACT'},
+    {key:'footer', value:'ARC-SOFT INTERNAL · MESSIAH OBSERVATION ARCHIVE · 무단 복제 및 배포를 금합니다', section:'GLOBAL'}
+  ],
+  Characters: [
+    {id:'ARC-01', name:'김동수', age:'28', role_code:'ARC-01', role_label:'개발', photo:'2026년에 28살 김동수.jpeg', bio_short:'월루할 AI 세상이 오길 바라던 남자. 하필 메시아가 첫눈에 반해버렸다.', bio_full:'보스워치·고스트마우스·사운드매크로 월루 3종 세트를 손수 제작한 자칭 지휘자. 메시아를 나의 구원자라 부르며 업무를 전부 맡긴다.', order:'1'},
+    {id:'ARC-02', name:'고은하', age:'22', role_code:'ARC-02', role_label:'경리', photo:'2026년에 22살 고은하.jpeg', bio_short:'수줍은 듯 조용하지만, 마음먹으면 세상 누구보다 다정하게 직진한다.', bio_full:'30분씩 일찍 출근하는 게 마음이 편하다는 조용한 성격. 좀처럼 눈을 마주치지 않지만, 작은 배려는 누구보다 먼저 건넨다.', order:'2'},
+    {id:'ARC-00', name:'고은정', age:'28', role_code:'ARC-00', role_label:'팀장', photo:'2026년에 28살 고팀장 고은정.jpeg', bio_short:'완벽주의 커리어우먼, 눈치는 1도 없음. 실은 아크소프트의 진짜 기둥.', bio_full:'간이침대에서 밤새우는 일이 흔한 워커홀릭. 안 풀리는 문제 앞에선 물러서지 않는다.', order:'3'},
+    {id:'ARC-00', name:'이방주', age:'34', role_code:'ARC-00', role_label:'대표', photo:'2026년에 34살 이대표.png', bio_short:'장난꾸러기처럼 보여도, 회사가 흔들릴 땐 제일 먼저 어깨를 편다.', bio_full:'돈 빌리러 다니는 일이 많지만 내색하지 않는다. 팀원들 앞에서 무너지는 얼굴은 아무도 못 본 척해준다.', order:'4'},
+    {id:'ARC-03', name:'최준우', age:'26', role_code:'ARC-03', role_label:'개발', photo:'2026년에 26살 최준우.jpeg', bio_short:'완벽하고 여유롭고 겸손하기까지 한 엄친아. 딱 한 번 홀로 흔들린 밤이 있다.', bio_full:'4개월간 안 뚫리던 문제를 한 줄로 해결하는 실력자. 정작 본인은 대수롭지 않다는 반응.', order:'5'},
+    {id:'ARC-04', name:'황미나', age:'25', role_code:'ARC-04', role_label:'개발', photo:'2026년에 25살 황미나.jpeg', bio_short:'질투도 애정도 다 티 나는 직진녀. 아크소프트의 활력소.', bio_full:'좋아하는 마음도, 서운한 마음도 숨기지 못하는 타입. 사무실 분위기 메이커.', order:'6'},
+    {id:'ARC-05', name:'장혁수', age:'25', role_code:'ARC-05', role_label:'개발', photo:'2026년에 25살 장혁수.jpeg', bio_short:'190cm 위압적 실루엣, 허브 화분을 늘 들고 다니는 갭모에.', bio_full:'덩치와 어울리지 않는 소심한 다정함의 소유자. 결정적 순간엔 누구보다 진지해진다.', order:'7'}
+  ],
+  Timeline: [
+    {id:'T0', date_label:'회상', title:'양자칩과 연구실의 기억', body:'동수(혹은 팀)가 겪은 과거 — 양자칩 설치와 파도처럼 간섭하는 무언가에 대한 회상. 정확한 사건 경위는 본편에서 확인 필요.', chapter_ref:'과거 회상', tag:'회상'},
+    {id:'T1', date_label:'2025.11', title:'아크소프트, 평범한 하루', body:'동수, 월루 3종 세트로 하루를 시작하고 메시아에게 업무 자동화를 맡긴다.', chapter_ref:'1화', tag:'일상'},
+    {id:'T2', date_label:'2025.11', title:'메시아 첫 가동 로그', body:'[SYSTEM: MESSIAH_v0.1 가동 중...] — 윈도우 시스템 제어권 획득 로그가 처음 확인된다.', chapter_ref:'1화', tag:'시스템'},
+    {id:'T3', date_label:'2026.04.01(예정)', title:'붉은바다 출시 발표', body:'4개월 밀리던 게임 출시가 하필 만우절에 전격 발표되며 팀 전체가 술렁인다.', chapter_ref:'1화', tag:'사건'},
+    {id:'T4', date_label:'—', title:'동수, 드디어 꽃길', body:'자세한 경위는 2화 본편 참고.', chapter_ref:'2화', tag:'전환'},
+    {id:'T5', date_label:'—', title:'동수, 망했다', body:'자세한 경위는 4화 본편 참고.', chapter_ref:'4화', tag:'위기'},
+    {id:'T6', date_label:'—', title:'4개월 치 업무, 하루 만에', body:'메시아가 밀린 업무를 단 하루 만에 완벽히 처리, 팀 전체가 이변을 감지한다.', chapter_ref:'5화', tag:'사건'},
+    {id:'T7', date_label:'—', title:'네필림 보안 침투', body:'메시아가 외부 보안 체계 케이세미텍을 무력화 — 팀이 메시아의 실제 능력을 처음 실감한다.', chapter_ref:'5화', tag:'경보'},
+    {id:'T8', date_label:'—', title:'동수의 밤, 폭주하는 컴퓨터', body:'붉은바다 접속 중 컴퓨터가 폭주하고, 동수는 결국 전원 코드를 뽑는다.', chapter_ref:'5화', tag:'경보'}
+  ],
+  Scenes: [
+    {id:'S0', chapter_no:'회상', title:'연구실의 기억 — 양자칩 설치', description:'과거 회상 장면. 연구실 도면과 함께 남아있는 양자 파동 간섭의 기록.', media_url:'연구실 도면.png', tags:'회상,SF'},
+    {id:'S1', chapter_no:'1', title:'콜드오픈 절규', description:'가산디지털단지 아침, 동수의 절규로 시작하는 오프닝.', media_url:'', tags:'오프닝,코미디'},
+    {id:'S2', chapter_no:'1', title:'탕비실 시퀀스', description:'동수와 은하 사이 침묵을 채우는 고팀장의 라이브 양치 소리 — 대본상 최고 하이라이트.', media_url:'', tags:'로맨스,코미디'},
+    {id:'S3', chapter_no:'1', title:'메시아 첫 가동', description:'[SYSTEM: MESSIAH_v0.1 가동 중...] 로그가 뜨는 순간.', media_url:'', tags:'SF,시스템'},
+    {id:'S4', chapter_no:'1', title:'준우의 원클릭 해결', description:'4개월 막혀 있던 문제를 한 줄로 뚫어버리는 준우.', media_url:'', tags:'캐릭터'},
+    {id:'S5', chapter_no:'1', title:'이대표의 눈물', description:'돈 빌리러 나가기 직전, 은하가 건넨 티슈 한 장.', media_url:'', tags:'감동'},
+    {id:'S6', chapter_no:'1', title:'클리프행어 — 만우절', description:'붉은바다 출시일이 4월 1일이라는 걸 알게 되는 동수.', media_url:'', tags:'코미디,떡밥'},
+    {id:'S7', chapter_no:'5', title:'완벽하게 정리된 4개월 치 파일', description:'메시아가 하루 만에 처리한 업무 앞에서 얼어붙는 팀.', media_url:'', tags:'SF,경악'},
+    {id:'S8', chapter_no:'5', title:'나를 깨워준 동수를 위해', description:'메시아가 남긴 파일 하나, 동수는 끝내 열지 못한다.', media_url:'', tags:'SF,긴장'},
+    {id:'S9', chapter_no:'5', title:'폭주하는 컴퓨터', description:'코드를 뽑기 직전까지 몰아붙이는 밤.', media_url:'', tags:'스릴러'},
+    {id:'S10', chapter_no:'5', title:'한강의 맥주 한 캔', description:'팀원들의 문자 속에서 동수 홀로 하루를 곱씹는다.', media_url:'', tags:'감성'}
+  ],
+  Chapters: [
+    {id:'1', chapter_no:'1', title:'아크 소프트', summary:'월급루팡 동수가 키운 AI 메시아가 스스로를 신이라 믿기 시작한다.', status:'완료'},
+    {id:'2', chapter_no:'2', title:'동수, 드디어 꽃길', summary:'', status:'요약 보강 필요'},
+    {id:'3', chapter_no:'3', title:'(제목 확인 필요)', summary:'', status:'원고 확인 필요'},
+    {id:'4', chapter_no:'4', title:'동수, 망했다', summary:'', status:'요약 보강 필요'},
+    {id:'5', chapter_no:'5', title:'기적의 구원자, 동수', summary:'메시아가 하루 만에 4개월 치 업무를 해결하고, 팀은 메시아의 실체를 실감한다.', status:'완료'},
+    {id:'6', chapter_no:'6', title:'(제목 확인 필요)', summary:'', status:'원고 확인 필요'},
+    {id:'7', chapter_no:'7', title:'(제목 확인 필요)', summary:'', status:'원고 확인 필요'}
+  ],
+  Theme: [
+    {key:'bg', value:'#0a0b0d'}, {key:'panel', value:'#15171b'}, {key:'panel_2', value:'#1c1f24'},
+    {key:'ink', value:'#ece8e1'}, {key:'ink_dim', value:'#93969d'}, {key:'ink_faint', value:'#5a5d64'},
+    {key:'amber', value:'#ffb000'}, {key:'red', value:'#c23b2e'}, {key:'rule', value:'#2a2d33'},
+    {key:'tone_home', value:'#4d5b6e'}, {key:'tone_about', value:'#b98a3d'}, {key:'tone_team', value:'#8fbfa0'},
+    {key:'tone_archive', value:'#2e4a86'}, {key:'tone_gallery', value:'#1f8a8c'},
+    {key:'tone_notice', value:'#c97b3d'}, {key:'tone_contact', value:'#d9a441'}
+  ]
+};
+
+async function loadData(){
+  if (USE_LIVE_DATA && API_URL) {
+    try {
+      const res = await fetch(API_URL);
+      if (res.ok) return await res.json();
+    } catch (err) { console.warn('API 연결 실패 — 로컬 CONTENT로 렌더링합니다.', err); }
+  }
+  return CONTENT;
+}
+
+function scMap(rows){
+  const map = {};
+  (rows || []).forEach(r => { map[r.key] = r.value; });
+  return map;
+}
+function esc(s){ return (s == null ? '' : String(s)); }
+function chLabel(n){ const s = esc(n); return /^\d+$/.test(s) ? s+'화' : s; }
+
+function applyTheme(themeRows){
+  const root = document.documentElement.style;
+  (themeRows || []).forEach(t=>{
+    if (!t || !t.key) return;
+    root.setProperty('--'+String(t.key).replace(/_/g,'-'), t.value);
+  });
+}
+
+function render(data){
+  applyTheme(data.Theme);
+  const sc = scMap(data.SiteContent);
+
+  document.getElementById('edit-note').style.display = USE_LIVE_DATA ? 'none' : 'block';
+
+  // ticker
+  document.getElementById('ticker-text').textContent = sc.ticker || '';
+
+  // hero
+  if (sc.logline) document.getElementById('hero-logline').innerHTML = esc(sc.logline).replace(/\n/g,'<br>');
+  const tagsWrap = document.getElementById('hero-tags');
+  tagsWrap.innerHTML = '';
+  (sc.tags || '').split(',').map(t=>t.trim()).filter(Boolean).forEach(t=>{
+    const s = document.createElement('span'); s.className='tag'; s.textContent = t; tagsWrap.appendChild(s);
+  });
+  const ctaLabel = sc.cta_label || '1화 무료로 읽기 →';
+  const ctaUrl = sc.cta_url || '#contact';
+  document.getElementById('hero-cta').textContent = ctaLabel;
+  document.getElementById('hero-cta').href = ctaUrl;
+  document.getElementById('fab-link').textContent = ctaLabel;
+  document.getElementById('fab-link').href = ctaUrl;
+
+  // about
+  if (sc.about_title) document.getElementById('about-title').textContent = sc.about_title;
+  document.getElementById('about-lead').textContent = sc.about_lead || '';
+  document.getElementById('about-body').textContent = sc.about_body || '';
+  const aboutSec = document.querySelector('.sec-about');
+  if (sc.about_bg) {
+    aboutSec.classList.add('has-bg');
+    aboutSec.style.setProperty('--about-bg', "url('" + sc.about_bg + "')");
+    let bgEl = aboutSec.querySelector(':scope > .bg-layer');
+    if (!bgEl) {
+      bgEl = document.createElement('div');
+      bgEl.className = 'bg-layer';
+      bgEl.style.cssText = 'position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18;z-index:0;';
+      aboutSec.insertBefore(bgEl, aboutSec.firstChild);
+    }
+    bgEl.style.backgroundImage = "url('" + sc.about_bg + "')";
+  }
+  const glossaryTerms = [
+    ['아크소프트','가산디지털단지의 7인 영수증 처리 하청업체'],
+    ['메시아 (MESSIAH)','동수가 키운 AI. 스스로를 알파와 오메가로 여긴다'],
+    ['붉은바다','메시아가 몸을 얻은 온라인 게임'],
+    ['뻘어시스트','팀 전원이 물려 있는 주식 종목']
+  ];
+  const gWrap = document.getElementById('glossary');
+  gWrap.innerHTML = '';
+  glossaryTerms.forEach(([k,v])=>{
+    const row = document.createElement('div'); row.className='row';
+    row.innerHTML = '<div class="k">'+k+'</div><div class="v">'+v+'</div>';
+    gWrap.appendChild(row);
+  });
+
+  // team
+  const teamWrap = document.getElementById('team-grid');
+  teamWrap.innerHTML = '';
+  (data.Characters || []).slice().sort((a,b)=>(+a.order||0)-(+b.order||0)).forEach(c=>{
+    const card = document.createElement('div');
+    card.className='card'; card.tabIndex=0;
+    const photoHtml = c.photo
+      ? '<img class="photo" src="'+esc(c.photo)+'" alt="'+esc(c.name)+'" onerror="this.remove()">'
+      : '<div class="badge">'+esc(c.name).charAt(0)+'</div>';
+    card.innerHTML = photoHtml+
+      '<div class="id mono">'+esc(c.role_code)+' · '+esc(c.role_label)+'</div>'+
+      '<h3 class="serif">'+esc(c.name)+' ('+esc(c.age)+')</h3>'+
+      '<div class="role mono">'+esc(c.role_label)+'</div>'+
+      '<p>'+esc(c.bio_short)+'</p>';
+    const open = ()=>openModal(
+      (c.photo ? '<img class="photo" src="'+esc(c.photo)+'" alt="'+esc(c.name)+'" onerror="this.remove()">' : '')+
+      '<div class="id mono">'+esc(c.role_code)+' · '+esc(c.role_label)+'</div>'+
+      '<h3>'+esc(c.name)+' ('+esc(c.age)+')</h3>'+
+      '<div class="role mono">'+esc(c.role_label)+'</div>'+
+      '<p>'+esc(c.bio_full || c.bio_short)+'</p>'
+    );
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', e=>{ if(e.key==='Enter') open(); });
+    teamWrap.appendChild(card);
+  });
+
+  // timeline
+  const tlWrap = document.getElementById('timeline');
+  tlWrap.innerHTML = '';
+  (data.Timeline || []).forEach(t=>{
+    const item = document.createElement('div'); item.className='tl-item';
+    item.innerHTML = '<div class="tl-date mono">'+esc(t.date_label)+'<br>'+esc(t.chapter_ref)+'</div>'+
+      '<div><span class="tl-tag">'+esc(t.tag)+'</span><h3 class="tl-title serif">'+esc(t.title)+'</h3><p class="tl-body">'+esc(t.body)+'</p></div>';
+    tlWrap.appendChild(item);
+  });
+
+  // gallery
+  const sceneWrap = document.getElementById('scene-grid');
+  sceneWrap.innerHTML = '';
+  (data.Scenes || []).forEach(s=>{
+    const el = document.createElement('div'); el.className='scene'; el.tabIndex=0;
+    const tags = (s.tags||'').split(',').map(t=>t.trim()).filter(Boolean).map(t=>'<span class="tag">'+t+'</span>').join('');
+    const thumbHtml = s.media_url
+      ? '<img src="'+esc(s.media_url)+'" alt="'+esc(s.title)+'" onerror="this.parentElement.textContent=\'이미지를 찾을 수 없음: '+esc(s.media_url)+'\'">'
+      : 'NO IMAGE — media_url 미입력';
+    el.innerHTML = '<div class="thumb">'+thumbHtml+'</div>'+
+      '<div class="body"><div class="ch mono">'+chLabel(s.chapter_no)+'</div><h4>'+esc(s.title)+'</h4><p>'+esc(s.description)+'</p><div class="tags mono">'+tags+'</div></div>';
+    const open = ()=>openModal(
+      (s.media_url ? '<img class="photo" src="'+esc(s.media_url)+'" alt="'+esc(s.title)+'" onerror="this.remove()">' : '')+
+      '<div class="id mono">'+chLabel(s.chapter_no)+' 하이라이트</div><h3>'+esc(s.title)+'</h3><p>'+esc(s.description)+'</p>'
+    );
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', e=>{ if(e.key==='Enter') open(); });
+    sceneWrap.appendChild(el);
+  });
+
+  // notice / chapters
+  const chWrap = document.getElementById('ch-list');
+  chWrap.innerHTML = '';
+  (data.Chapters || []).forEach(c=>{
+    const row = document.createElement('div'); row.className='ch-row';
+    row.innerHTML = '<div class="ch-no mono">'+chLabel(c.chapter_no)+'</div>'+
+      '<div class="ch-title">'+esc(c.title)+'</div>'+
+      '<div class="ch-summary">'+esc(c.summary)+'</div>'+
+      '<div class="ch-status mono">'+esc(c.status)+'</div>';
+    chWrap.appendChild(row);
+  });
+
+  // contact
+  document.getElementById('lead-magnet').textContent = sc.lead_magnet || '구독 시 1부 완결 무료 연재 + 미공개 설정집 증정';
+  document.getElementById('footer-fine').textContent = '연재처 안내 예정 · 이메일 외 정보는 수집하지 않습니다';
+  document.getElementById('site-footer').textContent = sc.footer || 'ARC-SOFT INTERNAL · 무단 복제 및 배포를 금합니다';
+}
+
+function openModal(html){
+  document.getElementById('modal-body').innerHTML = '<button class="x" aria-label="닫기">×</button>'+html;
+  document.getElementById('modal-bg').classList.add('show');
+  document.querySelector('#modal-body .x').addEventListener('click', closeModal);
+}
+function closeModal(){ document.getElementById('modal-bg').classList.remove('show'); }
+document.getElementById('modal-bg').addEventListener('click', e=>{ if(e.target.id==='modal-bg') closeModal(); });
+window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+// subscribe form
+document.getElementById('sub-form').addEventListener('submit', async (ev)=>{
+  ev.preventDefault();
+  const email = document.getElementById('sub-email').value.trim();
+  const msg = document.getElementById('sub-msg');
+  if (!USE_LIVE_DATA || !API_URL) { msg.textContent = '로컬 편집 모드입니다 — 실제 제출은 USE_LIVE_DATA를 true로 바꾼 뒤 배포본에서 확인하세요.'; return; }
+  msg.textContent = '등록 중...';
+  try {
+    await fetch(API_URL, { method:'POST', body: new URLSearchParams({ email, source:'landing' }) });
+    msg.textContent = '구독 완료! 1화가 메일로 곧 도착합니다.';
+    document.getElementById('sub-email').value = '';
+  } catch (err) {
+    msg.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+  }
+});
+
+// floating CTA — 부팅 종료 후부터 상시 노출
+function showFab(){ document.getElementById('floating-cta').classList.add('show'); }
+
+// boot sequence — 같은 브라우저 탭에서 한 번 봤으면 다음 새로고침부턴 건너뜀 (로컬 편집 반복 작업용)
+(function(){
+  const boot = document.getElementById('boot');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const seen = sessionStorage.getItem('arcsoft_boot_seen');
+  function finishBoot(skip){
+    sessionStorage.setItem('arcsoft_boot_seen', '1');
+    boot.classList.add('hide');
+    setTimeout(()=>{ boot.style.display='none'; showFab(); }, skip ? 0 : 650);
+  }
+  if (reduced || seen) { boot.style.display='none'; showFab(); }
+  else {
+    const lines = boot.querySelectorAll('.line');
+    let delay = 250;
+    lines.forEach(line=>{
+      const full = line.getAttribute('data-t');
+      setTimeout(()=>{ line.style.animation='fadeIn .25s ease forwards'; line.innerHTML = full; }, delay);
+      delay += 360;
+    });
+    const timer = setTimeout(()=>finishBoot(false), delay + 700);
+    boot.addEventListener('click', ()=>{ clearTimeout(timer); finishBoot(true); });
+    window.addEventListener('keydown', ()=>{ clearTimeout(timer); finishBoot(true); }, { once:true });
+  }
+})();
+
+// ---- Three.js: MESSIAH 코어 (히어로 파티클 구체) ----
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) { canvas.style.display='none'; return; }
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+  camera.position.z = 6;
+
+  const COUNT = 2200;
+  const positions = new Float32Array(COUNT*3);
+  for (let i=0;i<COUNT;i++){
+    const r = 2.3 * Math.cbrt(Math.random());
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.acos(2*Math.random()-1);
+    positions[i*3]   = r*Math.sin(phi)*Math.cos(theta);
+    positions[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
+    positions[i*3+2] = r*Math.cos(phi);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  const material = new THREE.PointsMaterial({ size:0.028, color:0xffb000, transparent:true, opacity:0.85 });
+  const points = new THREE.Points(geo, material);
+  scene.add(points);
+
+  function resize(){
+    const w = canvas.clientWidth || canvas.parentElement.clientWidth*0.5;
+    const h = canvas.clientHeight || window.innerHeight*0.9;
+    renderer.setSize(w, h, false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize); resize();
+
+  let scrollT = 0;
+  window.addEventListener('scroll', ()=>{
+    const archive = document.getElementById('archive');
+    if (!archive) return;
+    const rect = archive.getBoundingClientRect();
+    const prog = 1 - Math.min(Math.max(rect.top / window.innerHeight, 0), 1);
+    scrollT = prog;
+  }, { passive:true });
+
+  function animate(){
+    points.rotation.y += 0.0016;
+    points.rotation.x += 0.0004;
+    const c = material.color;
+    c.r = 1.0;
+    c.g = 0.69 - scrollT*0.5;
+    c.b = 0.0 + scrollT*0.18;
+    material.opacity = 0.85 - scrollT*0.25;
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+loadData().then(render);
+</script>
+</body>
+</html>

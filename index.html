@@ -15,6 +15,7 @@
   --paper:#f2ecdf; --paper-ink:#241f19;
   --tone-home:#4d5b6e; --tone-about:#b98a3d; --tone-team:#8fbfa0;
   --tone-archive:#2e4a86; --tone-gallery:#1f8a8c; --tone-notice:#c97b3d; --tone-contact:#d9a441;
+  --tone-play:#7a3fb8;
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -57,6 +58,14 @@ section.sec{padding:11vh 0 10vh;border-bottom:1px solid var(--rule);position:rel
 .sec-archive{background:radial-gradient(ellipse 60% 45% at 15% 0%,color-mix(in srgb,var(--tone-archive) 28%,transparent),transparent 60%),var(--bg);}
 .sec-gallery{background:radial-gradient(ellipse 60% 45% at 85% 0%,color-mix(in srgb,var(--tone-gallery) 26%,transparent),transparent 60%),var(--bg);}
 .sec-notice{background:radial-gradient(ellipse 60% 45% at 15% 0%,color-mix(in srgb,var(--tone-notice) 22%,transparent),transparent 60%),var(--bg);}
+.sec-play{background:radial-gradient(ellipse 60% 45% at 85% 0%,color-mix(in srgb,var(--tone-play) 26%,transparent),transparent 60%),var(--bg);}
+.play-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:8px;}
+.play-card{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:26px 24px;transition:border-color .2s,transform .15s;display:block;}
+.play-card:hover{border-color:var(--amber);transform:translateY(-3px);}
+.play-card .pc-ic{font-size:28px;margin-bottom:14px;}
+.play-card h3{font-family:'Noto Serif KR',serif;font-size:1.15rem;margin:0 0 8px;color:var(--ink);}
+.play-card p{font-size:.88rem;color:#b9b5ac;margin:0 0 16px;}
+.play-card .pc-go{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:.04em;}
 .sec-contact{background:radial-gradient(ellipse 60% 45% at 50% 0%,color-mix(in srgb,var(--tone-contact) 22%,transparent),transparent 60%),var(--bg);text-align:center;}
 
 .kicker{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;}
@@ -189,6 +198,7 @@ footer{padding:5vh 7vw;text-align:center;font-family:'IBM Plex Mono',monospace;f
       <a href="#team">사원소개</a>
       <a href="#archive">회사연혁</a>
       <a href="#gallery">포트폴리오</a>
+      <a href="#play">플레이해보기</a>
       <a href="#notice">공지사항</a>
       <a href="#contact">채용문의</a>
     </div>
@@ -239,6 +249,27 @@ footer{padding:5vh 7vw;text-align:center;font-family:'IBM Plex Mono',monospace;f
     <div class="kicker mono">포트폴리오 <span class="loc">· 적해의문 게임 속 세계</span></div>
     <h2 class="h serif">하이라이트 아카이브</h2>
     <div class="scene-grid" id="scene-grid"></div>
+  </div>
+</section>
+
+<section id="play" class="sec sec-play">
+  <div class="wrap">
+    <div class="kicker mono">플레이해보기 <span class="loc">· 브라우저에서 바로 체험</span></div>
+    <h2 class="h serif">읽기 전에, 먼저 겪어보세요</h2>
+    <div class="play-grid">
+      <a class="play-card" href="https://claude.ai/code/artifact/2703a734-4a51-4d97-84cf-571e936de36f" target="_blank" rel="noopener">
+        <div class="pc-ic">⌨️</div>
+        <h3>메시아 타자연습</h3>
+        <p>1화부터 10화까지, 등장인물의 대사와 키워드를 직접 타이핑하며 스포일러를 풀어가는 미니게임. 10단계를 클리어하면 완주 기념 선물도 받을 수 있습니다.</p>
+        <div class="pc-go">지금 플레이 →</div>
+      </a>
+      <a class="play-card" href="https://claude.ai/code/artifact/3baa7735-d321-42aa-aab7-2b1d72dc3b0f" target="_blank" rel="noopener">
+        <div class="pc-ic">🏠</div>
+        <h3>아크소프트 미니홈피</h3>
+        <p>동수, 은하, 지현… 등장인물의 미니미로 방을 직접 꾸며보세요. 타자연습에서 모은 포인트를 가져와 아이템을 살 수도 있습니다.</p>
+        <div class="pc-go">방 꾸미러 가기 →</div>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -571,58 +602,4 @@ function showFab(){ document.getElementById('floating-cta').classList.add('show'
   if (reduced) { canvas.style.display='none'; return; }
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
-  camera.position.z = 6;
-
-  const COUNT = 2200;
-  const positions = new Float32Array(COUNT*3);
-  for (let i=0;i<COUNT;i++){
-    const r = 2.3 * Math.cbrt(Math.random());
-    const theta = Math.random()*Math.PI*2;
-    const phi = Math.acos(2*Math.random()-1);
-    positions[i*3]   = r*Math.sin(phi)*Math.cos(theta);
-    positions[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
-    positions[i*3+2] = r*Math.cos(phi);
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
-  const material = new THREE.PointsMaterial({ size:0.028, color:0xffb000, transparent:true, opacity:0.85 });
-  const points = new THREE.Points(geo, material);
-  scene.add(points);
-
-  function resize(){
-    const w = canvas.clientWidth || canvas.parentElement.clientWidth*0.5;
-    const h = canvas.clientHeight || window.innerHeight*0.9;
-    renderer.setSize(w, h, false);
-    camera.aspect = w/h; camera.updateProjectionMatrix();
-  }
-  window.addEventListener('resize', resize); resize();
-
-  let scrollT = 0;
-  window.addEventListener('scroll', ()=>{
-    const archive = document.getElementById('archive');
-    if (!archive) return;
-    const rect = archive.getBoundingClientRect();
-    const prog = 1 - Math.min(Math.max(rect.top / window.innerHeight, 0), 1);
-    scrollT = prog;
-  }, { passive:true });
-
-  function animate(){
-    points.rotation.y += 0.0016;
-    points.rotation.x += 0.0004;
-    const c = material.color;
-    c.r = 1.0;
-    c.g = 0.69 - scrollT*0.5;
-    c.b = 0.0 + scrollT*0.18;
-    material.opacity = 0.85 - scrollT*0.25;
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
-
-loadData().then(render);
-</script>
-</body>
-</html>
+  const sc

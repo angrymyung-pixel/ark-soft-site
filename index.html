@@ -17,14 +17,14 @@
   .hero:before{content:"";position:absolute;z-index:0;top:-4%;right:-2%;width:64%;height:108%;background:url('assets/messiah-eye.png') center/cover no-repeat;opacity:.78;filter:saturate(.88) contrast(1.1) brightness(.72);transform-origin:60% 50%;animation:eyeApproach 12s ease-in-out infinite alternate;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26%,#000 100%);mask-image:linear-gradient(90deg,transparent 0,#000 26%,#000 100%)}
   .hero:after{z-index:1;background:linear-gradient(90deg,rgba(8,9,11,.98) 4%,rgba(8,9,11,.84) 34%,rgba(8,9,11,.22) 70%,rgba(8,9,11,.36)),radial-gradient(circle at 72% 42%,transparent 0 18%,rgba(94,5,11,.18) 50%,transparent 72%)}
   #coreCanvas{z-index:2;inset:0 0 0 36%;width:64%;opacity:.32}
-  .hero-logo{width:clamp(320px,42vw,600px);max-width:none!important;margin:0 0 -2.5%!important;font-size:0!important;line-height:0!important}
+  .hero-logo{width:clamp(160px,21vw,300px);max-width:none!important;margin:0!important;font-size:0!important;line-height:0!important}
   .hero-logo img{display:block;width:100%;height:auto;mix-blend-mode:screen;opacity:.96;filter:brightness(1.03) saturate(.9) drop-shadow(0 0 22px rgba(255,205,116,.28))}
   .hero-copy{word-break:keep-all}
   .characters{grid-template-columns:repeat(4,1fr)}
   #people .section-head .lead{grid-column:2}
   @keyframes eyeApproach{from{transform:scale(1.01)}to{transform:scale(1.075)}}
   @media(max-width:900px){#people .section-head .lead{grid-column:1}.characters{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:700px){.hero:before{right:-28%;width:128%;opacity:.55;-webkit-mask-image:linear-gradient(180deg,#000 0,rgba(0,0,0,.72) 56%,transparent 92%);mask-image:linear-gradient(180deg,#000 0,rgba(0,0,0,.72) 56%,transparent 92%)}#coreCanvas{inset:0;width:100%;opacity:.24}.hero-logo{width:min(82vw,520px)}}
+  @media(max-width:700px){.hero:before{right:-28%;width:128%;opacity:.55;-webkit-mask-image:linear-gradient(180deg,#000 0,rgba(0,0,0,.72) 56%,transparent 92%);mask-image:linear-gradient(180deg,#000 0,rgba(0,0,0,.72) 56%,transparent 92%)}#coreCanvas{inset:0;width:100%;opacity:.24}.hero-logo{width:min(41vw,260px)}}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero:before{animation:none}.reveal{opacity:1;transform:none;transition:none}.person img,.shot img,.music-toggle{transition:none}.music-toggle.playing .music-bars i,.boot-progress i,.boot-line.go{animation:none}}
 </style>
 </head>

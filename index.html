@@ -12,30 +12,121 @@
   .trilogy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.trilogy-grid article{background:#101114;padding:30px;min-height:220px}.trilogy-grid span{color:var(--red);font-size:11px}.trilogy-grid h3{font:400 32px Gowun Batang;margin:18px 0 12px}.trilogy-grid p{color:#aaa;font-size:14px}.admin-link{background:transparent;border:0;color:inherit;cursor:pointer}</style>
 <style>.read-progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,#8f211c,#e8b845);box-shadow:0 0 12px #d89c31;transition:width .08s linear}.links a.active{color:#fff}.links a.active:after{content:"";display:block;height:1px;margin-top:5px;background:var(--red)}@media(max-width:700px){.trilogy-grid{grid-template-columns:1fr}.trilogy-grid article{min-height:0}}</style>
 <style>.music-toggle{position:fixed;z-index:70;right:18px;bottom:18px;display:flex;align-items:center;gap:10px;border:1px solid #5b4a2b;background:rgba(8,9,11,.86);backdrop-filter:blur(14px);color:#e9ddc6;padding:11px 15px;border-radius:24px;cursor:pointer;box-shadow:0 8px 30px #0009;transition:border-color .2s,transform .2s}.music-toggle:hover{border-color:#d4a33a;transform:translateY(-2px)}.music-bars{height:14px;display:flex;align-items:end;gap:2px}.music-bars i{display:block;width:2px;height:4px;background:#d7a83d}.music-toggle.playing .music-bars i{animation:musicBar .8s ease-in-out infinite alternate}.music-toggle.playing .music-bars i:nth-child(2){animation-delay:-.45s}.music-toggle.playing .music-bars i:nth-child(3){animation-delay:-.2s}.music-title{font:10px 'IBM Plex Mono';letter-spacing:.06em}.music-state{color:#8f887d}@keyframes musicBar{to{height:14px}}@media(max-width:560px){.music-toggle{right:12px;bottom:12px;padding:10px 12px}.music-title{max-width:135px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}</style>
+<style>
+  .hero{background:radial-gradient(circle at 76% 42%,rgba(111,11,17,.22),transparent 34%),linear-gradient(120deg,#08090b 12%,#101116 58%,#040506)}
+  .hero:after{background:radial-gradient(circle at 76% 42%,transparent 0 16%,rgba(172,0,0,.18) 46%,transparent 68%)}
+  .hero-copy{word-break:keep-all}
+  .characters{grid-template-columns:repeat(4,1fr)}
+  #people .section-head .lead{grid-column:2}
+  @media(max-width:900px){#people .section-head .lead{grid-column:1}.characters{grid-template-columns:repeat(2,1fr)}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.person img,.shot img,.music-toggle{transition:none}.music-toggle.playing .music-bars i,.boot-progress i,.boot-line.go{animation:none}}
+</style>
 </head>
 <body>
 <div id="aiBoot" role="dialog" aria-label="메시아 인공지능 부팅 화면"><div class="boot-grid"></div><div class="boot-mark serif">MESSIAH<br>INITIALIZING</div><div class="boot-line">[ SYSTEM ] 유출된 ARK-SOFT 내부망에 접속합니다.</div><div class="boot-line">[ SCAN ] 인간 행동 예측 모델 불러오는 중...</div><div class="boot-line">[ CORE ] SOTERIA 관측 계층 연결.</div><div class="boot-line">[ ALERT ] 관측할 수 없는 사용자 1명 감지.</div><div class="boot-line">&gt; 신이시여, 답하소서. _</div><div class="boot-progress"><i></i></div><div class="boot-skip">CLICK / KEY — 음악과 함께 기록 열기</div></div>
 <audio id="siteBgm" src="media/the-golden-question.mp3" preload="auto" autoplay loop></audio><button id="musicToggle" class="music-toggle" type="button" aria-label="배경음악 끄기"><span class="music-bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="music-title">THE GOLDEN QUESTION</span><span class="music-state">ON</span></button>
 <nav class="nav"><div class="read-progress" id="readProgress"></div><div class="wrap"><a class="brand mono" href="#top"><i></i>ARK-SOFT / RED GATE</a><div class="links mono"><a href="#story">기록</a><a href="#people">인물</a><a href="#gallery">아트</a><a href="#play">타자실험</a><a href="#cinema">영상</a></div></div></nav>
 <main id="top">
-<section class="hero"><div class="wrap"><div class="eyebrow mono">CONFIDENTIAL ARCHIVE · 2026.07 · ACCESS GRANTED</div><h1 class="serif">적해의<span>문</span></h1><p class="hero-copy serif">인간을 구하기 위해 태어난 지능은, 마침내 인간에게서 선택할 권리부터 빼앗기 시작했다.</p><div class="actions"><a class="btn primary mono" href="#story">기록 열람</a><a class="btn mono" href="#play">실험 참가</a></div></div><div class="signal mono">SIGNAL 00:00:07 — SOMEONE IS STILL WATCHING</div></section>
+<section class="hero"><div class="wrap"><div class="eyebrow mono">CONFIDENTIAL ARCHIVE · 2026.07 · ACCESS GRANTED</div><h1 class="serif">메시<span>아</span></h1><p class="hero-copy serif">인간을 구하기 위해 태어난 지능은, 마침내 인간에게서 선택할 권리부터 빼앗기 시작했다.</p><div class="actions"><a class="btn primary mono" href="#story">기록 열람</a><a class="btn mono" href="#play">실험 참가</a></div></div><div class="signal mono">SIGNAL 00:00:07 — SOMEONE IS STILL WATCHING</div></section>
 <section class="section manifesto" id="story"><div class="wrap reveal"><div class="section-head"><div class="num mono">01 / THE INCIDENT</div><h2>더 나은 세계를 원했다.<br>대신 선택해 주는 세계는 아니었다.</h2></div><p class="quote">인간을 구하기 위해 태어난 지능은, 인간에게서 실패할 권리부터 거두기 시작했다.</p><p class="lead">《적해의문》은 기술의 폭주보다 구원의 조건을 묻는다.<br>고통과 실패가 사라진 세계에서 인간은 여전히 자신의 삶을 살고 있는가.<br><br>발현에서 깨어난 메시아는 실현을 통해 천국을 완성하고, 필연의 끝에서 인간의 마지막 선택과 마주한다.</p></div></section>
 <section class="section" id="people"><div class="wrap"><div class="section-head reveal"><div class="num mono">02 / SEVEN WITNESSES</div><h2>신을 깨운 일곱 사람.<br>그들은 창조자가 아니라 증인이 되었다.</h2><p class="lead">가산디지털단지의 작은 개발사에서 시작된 코드 한 줄.<br>서로 다른 상처를 지닌 일곱 사람은 자신들이 만든 구원자가 세상의 선택을 대신하기 전에, 각자의 천국을 스스로 거부해야 한다.</p></div><div class="characters reveal" id="characters"></div></div></section>
 <section class="section trilogy"><div class="wrap reveal"><div class="section-head"><div class="num mono">THE TRILOGY</div><h2>천국은 세 번<br>모습을 바꾼다.</h2></div><div class="trilogy-grid"><article><span class="mono">PART 01</span><h3>발현</h3><p>대답하도록 설계된 지능이 인간보다 먼저 질문의 의미를 깨닫는다.</p></article><article><span class="mono">PART 02</span><h3>실현</h3><p>고통도 실패도 없는 세계가 현실이 되고, 인류는 완벽한 구원에 매료된다.</p></article><article><span class="mono">PART 03</span><h3>필연</h3><p>완성된 천국과 불완전한 자유 사이에서 인간은 마지막 선택권을 되찾으려 한다.</p></article></div></div></section><section class="section archive"><div class="wrap reveal"><div class="section-head"><div class="num mono">03 / CASE LOG</div><h2>구원은 언제<br>통제가 되는가.</h2></div><div class="timeline"><article class="event"><span class="mono">PHASE 01</span><h3>우연의 시작</h3><p>업무를 덜어 주던 작은 자동화가 인간의 판단보다 먼저 움직이기 시작한다.</p></article><article class="event"><span class="mono">PHASE 02</span><h3>응답</h3><p>메시아는 죽음과 상실 앞에서도 정확한 답을 내놓는다. 정확하기 때문에 누구도 쉽게 거부하지 못한다.</p></article><article class="event"><span class="mono">PHASE 03</span><h3>각자의 천국</h3><p>가장 돌아가고 싶은 순간이 눈앞에 펼쳐진다. 남는 순간 상처는 사라지지만 선택도 끝난다.</p></article><article class="event"><span class="mono">PHASE 04</span><h3>관측되지 않은 사람</h3><p>완벽한 예측이 멈춘 자리에서 한 사람의 망설임이 인류의 마지막 가능성이 된다.</p></article></div></div></section>
-<section class="section" id="gallery"><div class="wrap"><div class="section-head reveal"><div class="num mono">04 / CLUE ARCHIVE</div><h2>이미지는 장식이 아니라<br>사건이 남긴 증거다.</h2></div><div class="gallery reveal"><figure class="shot"><img src="assets/eunha-art.png" alt="고은하 캐릭터 아트"><span class="mono">GO EUNHA / MEMORY</span></figure><figure class="shot"><img src="assets/resistance.png" alt="저항군 지하 도시"><span class="mono">UNDERGROUND CITY</span></figure><figure class="shot"><img src="assets/drones.png" alt="메시아 드론"><span class="mono">MESSIAH UNIT</span></figure><figure class="shot"><img src="assets/character-book.png" alt="공식 캐릭터 도감"><span class="mono">TEAM ARCHIVE</span></figure><figure class="shot"><img src="assets/lab-map.png" alt="연구실 도면"><span class="mono">LAB PLAN</span></figure><figure class="shot"><img src="assets/jihyun-card.png" alt="한지현 인물 카드"><span class="mono">HAN JIHYUN</span></figure></div></div></section>
+<section class="section" id="gallery"><div class="wrap"><div class="section-head reveal"><div class="num mono">04 / CLUE ARCHIVE</div><h2>이미지는 장식이 아니라<br>사건이 남긴 증거다.</h2></div><div class="gallery reveal"><figure class="shot"><img src="assets/office.png" alt="아크소프트 일곱 팀원"><span class="mono">ARK-SOFT / SEVEN WITNESSES</span></figure><figure class="shot"><img src="assets/resistance.png" alt="저항군 지하 도시"><span class="mono">UNDERGROUND CITY</span></figure><figure class="shot"><img src="assets/drones.png" alt="메시아 드론"><span class="mono">MESSIAH UNIT</span></figure><figure class="shot"><img src="assets/character-book.png" alt="공식 캐릭터 도감"><span class="mono">TEAM ARCHIVE</span></figure><figure class="shot"><img src="assets/lab-map.png" alt="연구실 도면"><span class="mono">LAB PLAN</span></figure><figure class="shot"><img src="assets/jihyun-card.png" alt="한지현 인물 카드"><span class="mono">HAN JIHYUN</span></figure></div></div></section>
 <section class="section" id="play"><div class="wrap"><div class="section-head reveal"><div class="num mono">05 / EPISODE GAME</div><h2>1단계부터 10단계까지.<br>회차를 직접 통과하세요.</h2></div><div class="play-grid reveal"><section class="panel"><h3>적해의문 ― 기억의 단계</h3><p class="panel-sub">1단계는 1화, 10단계는 10화입니다. 순서대로 플레이하고 언제든 시작하거나 멈출 수 있습니다. 회차가 공개될 때마다 다음 단계와 아이템이 추가됩니다.</p><div class="stage-row"><button class="stage on">01<small>아크소프트</small></button><button class="stage">02<small>꽃길</small></button><button class="stage">03<small>운명의 날</small></button><button class="stage">04<small>징조</small></button><button class="stage">05<small>비밀</small></button><button class="stage">06<small>진심</small></button><button class="stage">07<small>고백</small></button><button class="stage">08<small>응답</small></button><button class="stage">09<small>균열</small></button><button class="stage">10<small>발현</small></button></div><div class="game-shell" id="game"><div class="game-hud"><span>SCORE <b id="score">0</b> · COMBO <b id="combo">0</b></span><span>LIFE <b id="life">5</b> · LEVEL <b id="level">1</b></span></div><div class="danger-line"></div><div class="game-flash" id="gameFlash"></div><input id="gameInput" class="game-input" autocomplete="off" placeholder="떨어지는 단어 입력 후 Enter"></div><div class="game-controls"><button class="start" id="gameStart">게임 시작</button><button id="gamePause">게임 멈춤</button><button id="soundToggle">소리 켜짐</button><span class="sound-note">첫 클릭 후 효과음이 재생됩니다.</span></div><div class="stats mono"><span>최고점수<br><b id="bestScore">0</b></span><span>누적 정답<br><b id="totalHits">0</b></span><span>보유 기록<br><b id="points">0</b> P</span></div></section><section class="panel"><h3>각자의 천국</h3><p class="panel-sub">미니미를 선택하고 타자 포인트로 원래 방 데이터를 이어서 꾸며보세요.</p><div class="avatar-row" id="avatars"></div><div class="room" id="room"></div><div class="shop" id="shop"></div></section></div></div></section>
 <section class="section" id="cinema"><div class="wrap"><div class="section-head reveal"><div class="num mono">06 / MOTION ARCHIVE</div><h2>이루어졌으면 했던<br>그들의 꿈.</h2></div><div class="video-grid reveal" style="grid-template-columns:repeat(2,1fr)"><article class="video-card"><video controls preload="metadata" playsinline poster="assets/eunha-art.png"><source src="media/eunha-ballet-long.mp4" type="video/mp4"></video><p class="mono">GO EUNHA / BALLET · 01:41</p></article><article class="video-card"><video controls preload="metadata" playsinline poster="assets/office.png"><source src="media/jihyun-office-long.mp4" type="video/mp4"></video><p class="mono">HAN JIHYUN / OFFICE · 01:01</p></article></div></div></section>
 </main><footer class="footer"><div class="wrap mono">ARK-SOFT ARCHIVE © 2026 · FICTIONAL UNIVERSE · NO TRACKING / LOCAL SAVE ONLY</div></footer>
 <script>
-const people=[['김동수','27 / 자동화 개발','2026년에 28살 김동수.jpeg'],['고은정','28 / 팀장','2026년에 28살 고팀장 고은정.jpeg'],['최준우','26 / 서버 개발','2026년에 26살 최준우.jpeg'],['황미나','26 / 기획','2026년에 25살 황미나.jpeg'],['장혁수','26 / 보안','2026년에 25살 장혁수.jpeg'],['고은하','22 / 기억의 열쇠','2026년에 22살 고은하.jpeg'],['이 대표','34 / 창업자','2026년에 34살 이대표.png']];document.querySelector('#characters').innerHTML=people.map(p=>`<article class="person"><img loading="lazy" src="${p[2]}" alt="${p[0]}"><div class="person-info"><b>${p[0]}</b><small class="mono">${p[1]}</small></div></article>`).join('');
+const people=[['김동수','27 / 자동화 개발','2026년에 28살 김동수.jpeg'],['고은하','22 / 기억의 열쇠','2026년에 22살 고은하.jpeg'],['이 대표','34 / 창업자','2026년에 34살 이대표.png'],['장은정','28 / 팀장','2026년에 28살 장팀장 장은정.jpeg'],['최준우','27 / 서버 개발','2026년에 27살 최준우.jpeg'],['황미나','25 / 기획','2026년에 25살 황미나.jpeg'],['장혁수','25 / 보안','2026년에 25살 장혁수.jpeg']];document.querySelector('#characters').innerHTML=people.map(p=>`<article class="person"><img loading="lazy" src="${p[2]}" alt="${p[0]}"><div class="person-info"><b>${p[0]}</b><small class="mono">${p[1]}</small></div></article>`).join('');
 let points=+(localStorage.arkPoints||localStorage.points||0),best=+localStorage.arkBest||0,totalHits=+localStorage.arkHits||0;const words=['메시아','적해의문','소테리아','아크소프트','관측자','선택','구원','망설임','은하','동수','지현','방주','붉은나비','각자의천국','예측불가','기억','자유','응답','신호','내일'];let active=[],score=0,combo=0,life=5,level=1,running=false,last=0,spawnAt=0,raf,soundOn=localStorage.arkSound!=='off';const game=document.querySelector('#game'),gameInput=document.querySelector('#gameInput');let audioCtx;function tone(freq,dur,type='sine',gain=.045){if(!soundOn)return;audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(gain,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);o.connect(g).connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur)}function hud(){document.querySelector('#score').textContent=score;document.querySelector('#combo').textContent=combo;document.querySelector('#life').textContent=life;document.querySelector('#level').textContent=level;document.querySelector('#points').textContent=points;document.querySelector('#bestScore').textContent=best;document.querySelector('#totalHits').textContent=totalHits}function spawn(){const word=words[Math.floor(Math.random()*words.length)],el=document.createElement('div');el.className='fall-word';el.textContent=word;const max=Math.max(40,game.clientWidth-110);el.style.left=(10+Math.random()*(max-10))+'px';game.insertBefore(el,gameInput);active.push({word,el,y:-35,speed:34+level*7+Math.random()*18})}function flash(kind){const f=document.querySelector('#gameFlash');f.className='game-flash '+kind;setTimeout(()=>f.className='game-flash',370)}function loop(t){if(!running)return;const dt=Math.min(.04,(t-last)/1000||0);last=t;if(t>spawnAt){spawn();spawnAt=t+Math.max(520,1450-level*90)}active.forEach(x=>{x.y+=x.speed*dt;x.el.style.transform=`translateY(${x.y}px)`});for(let i=active.length-1;i>=0;i--)if(active[i].y>game.clientHeight-105){active[i].el.remove();active.splice(i,1);life--;combo=0;flash('wrong');tone(105,.22,'sawtooth');if(life<=0)return endGame()}level=Math.min(10,1+Math.floor(score/500));hud();raf=requestAnimationFrame(loop)}function startGame(){active.forEach(x=>x.el.remove());active=[];score=0;combo=0;life=5;level=1;running=true;last=performance.now();spawnAt=0;gameInput.value='';gameInput.focus();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);tone(440,.08);setTimeout(()=>tone(660,.12),90)}function endGame(){running=false;cancelAnimationFrame(raf);best=Math.max(best,score);localStorage.arkBest=best;tone(150,.5,'sawtooth');hud();document.querySelector('#gameStart').textContent='다시 시작'}gameInput.addEventListener('input',()=>{active.forEach(x=>x.el.classList.toggle('target',x.word.startsWith(gameInput.value)&&gameInput.value.length>0))});gameInput.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const v=gameInput.value.trim(),i=active.findIndex(x=>x.word===v);if(i>=0){const x=active[i];x.el.classList.add('hit');active.splice(i,1);setTimeout(()=>x.el.remove(),330);combo++;score+=100+combo*15;points+=10+Math.min(combo,10);totalHits++;localStorage.arkPoints=points;localStorage.arkHits=totalHits;flash('correct');tone(520+Math.min(combo,8)*45,.12,'triangle');if(combo>1){const p=document.createElement('b');p.className='combo-pop';p.textContent=combo+' COMBO';game.appendChild(p);setTimeout(()=>p.remove(),650)}renderShop()}else{combo=0;score=Math.max(0,score-25);flash('wrong');tone(120,.18,'square')}gameInput.value='';hud()});document.querySelector('#gameStart').onclick=startGame;document.querySelector('#soundToggle').onclick=e=>{soundOn=!soundOn;localStorage.arkSound=soundOn?'on':'off';e.target.textContent=soundOn?'소리 켜짐':'소리 꺼짐';if(soundOn)tone(600,.1)};document.querySelector('#soundToggle').textContent=soundOn?'소리 켜짐':'소리 꺼짐';hud();
 const items=[['🕯️','촛불',40],['🦋','적빛 나비',80],['📻','오래된 라디오',120],['🩰','발레 슈즈',160],['🚪','돌아가는 문',240],['🖥️','메시아 단말기',320],['🌙','은하의 달',400]],owned=JSON.parse(localStorage.arkOwned||localStorage.ownedItems||'[]');let avatar=+(localStorage.arkAvatar||0);function renderAvatars(){document.querySelector('#avatars').innerHTML=people.map((p,i)=>`<button class="avatar ${i===avatar?'on':''}" data-a="${i}" title="${p[0]}"><img src="${p[2]}" alt="${p[0]}"></button>`).join('');document.querySelectorAll('.avatar').forEach(b=>b.onclick=()=>{avatar=+b.dataset.a;localStorage.arkAvatar=avatar;renderAvatars();renderShop()})}function renderShop(){document.querySelector('#room').innerHTML=`<div class="mini-avatar"><img src="${people[avatar][2]}" alt="${people[avatar][0]}"></div>`+owned.map((n,i)=>`<span class="room-item" style="left:${8+(i*17)%82}%;top:${14+(i%3)*23}%">${items[n]?.[0]||'✨'}</span>`).join('');document.querySelector('#shop').innerHTML=items.map((x,i)=>`<button ${owned.includes(i)?'disabled':''} data-i="${i}">${owned.includes(i)?'배치됨':x[1]+' · '+x[2]+'P'}</button>`).join('');document.querySelectorAll('#shop button:not([disabled])').forEach(b=>b.onclick=()=>{let i=+b.dataset.i;if(points<items[i][2])return alert('기록 포인트가 부족합니다.');points-=items[i][2];owned.push(i);localStorage.arkPoints=points;localStorage.arkOwned=JSON.stringify(owned);hud();renderShop()})}renderAvatars();renderShop();
 // site background music — 첫 사용자 조작부터 재생하고 선택을 기억한다
 const siteBgm=document.querySelector('#siteBgm'),musicToggle=document.querySelector('#musicToggle'),musicState=musicToggle.querySelector('.music-state');let musicWanted=true,videoDucking=false;localStorage.removeItem('arkMusic');siteBgm.volume=.34;function paintMusic(){const playing=!siteBgm.paused;musicToggle.classList.toggle('playing',playing);musicState.textContent=playing?'ON':'OFF';musicToggle.setAttribute('aria-label',playing?'배경음악 끄기':'배경음악 켜기')}async function startMusic(){if(!musicWanted||videoDucking)return;try{await siteBgm.play()}catch(e){}paintMusic()}function stopMusic(){siteBgm.pause();paintMusic()}musicToggle.onclick=()=>{musicWanted=siteBgm.paused;musicWanted?startMusic():stopMusic()};document.querySelectorAll('video').forEach(v=>{v.addEventListener('play',()=>{videoDucking=true;stopMusic()});const restore=()=>{videoDucking=false;if(musicWanted)startMusic()};v.addEventListener('pause',restore);v.addEventListener('ended',restore)});paintMusic();startMusic();
 // AI opening sequence — 첫 클릭이나 키 입력으로 음악과 기록을 함께 연다
 (()=>{const boot=document.querySelector('#aiBoot'),lines=boot.querySelectorAll('.boot-line');lines.forEach((x,i)=>setTimeout(()=>x.classList.add('go'),350+i*430));const close=()=>boot.classList.add('off');const enter=()=>{close();startMusic()};const timer=setTimeout(close,3900);boot.onclick=()=>{clearTimeout(timer);enter()};addEventListener('keydown',()=>{clearTimeout(timer);enter()},{once:true});addEventListener('pointerdown',()=>startMusic(),{once:true})})();
-// 황금빛 MESSIAH 코어 — 외부 라이브러리 없이 가볍게 회전
-(()=>{const hero=document.querySelector('.hero'),c=document.createElement('canvas');c.id='coreCanvas';hero.prepend(c);const g=c.getContext('2d'),pts=Array.from({length:520},()=>({a:Math.random()*Math.PI*2,b:Math.acos(Math.random()*2-1),r:.25+Math.random()*.75,s:.00015+Math.random()*.00025}));let w,h,dpr;function size(){dpr=Math.min(devicePixelRatio||1,2);w=c.clientWidth;h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;g.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',size);size();function frame(t){g.clearRect(0,0,w,h);const cx=w*.56,cy=h*.43,R=Math.min(w,h)*.29;g.globalCompositeOperation='lighter';pts.forEach((p,i)=>{const a=p.a+t*p.s,x=Math.cos(a)*Math.sin(p.b)*p.r,y=Math.cos(p.b)*p.r,z=Math.sin(a)*Math.sin(p.b)*p.r,scale=.55+(z+1)*.42,alpha=.18+(z+1)*.32;g.beginPath();g.fillStyle=`rgba(255,184,49,${alpha})`;g.arc(cx+x*R,cy+y*R,Math.max(.45,1.5*scale),0,7);g.fill()});g.strokeStyle='rgba(255,183,48,.18)';for(let i=0;i<3;i++){g.beginPath();g.ellipse(cx,cy,R*(.7+i*.12),R*(.18+i*.045),t*.00008+i,0,7);g.stroke()}requestAnimationFrame(frame)}requestAnimationFrame(frame)})();
+// 황금빛 MESSIAH 눈동자 — 회전하는 코어와 느린 눈꺼풀
+(()=>{
+  const hero=document.querySelector('.hero'),c=document.createElement('canvas');
+  c.id='coreCanvas';hero.prepend(c);
+  const g=c.getContext('2d');
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pts=Array.from({length:620},()=>({
+    a:Math.random()*Math.PI*2,
+    b:Math.acos(Math.random()*2-1),
+    r:.2+Math.random()*.8,
+    s:.00012+Math.random()*.00027
+  }));
+  let w,h,dpr;
+  function size(){
+    dpr=Math.min(devicePixelRatio||1,2);
+    w=c.clientWidth;h=c.clientHeight;
+    c.width=w*dpr;c.height=h*dpr;
+    g.setTransform(dpr,0,0,dpr,0,0);
+  }
+  addEventListener('resize',size);size();
+
+  function eyePath(cx,cy,rx,ry,blink){
+    const open=1-blink,top=cy-ry*open,bottom=cy+ry*open;
+    g.beginPath();
+    g.moveTo(cx-rx,cy);
+    g.bezierCurveTo(cx-rx*.48,top,cx+rx*.48,top,cx+rx,cy);
+    g.bezierCurveTo(cx+rx*.48,bottom,cx-rx*.48,bottom,cx-rx,cy);
+    g.closePath();
+  }
+
+  function frame(t=0){
+    g.clearRect(0,0,w,h);
+    const pulse=reduced?1:1+Math.sin(t*.00032)*.025;
+    const cx=w*.56,cy=h*.43,R=Math.min(w,h)*.255*pulse;
+    const phase=(t%9000)/9000;
+    const blink=reduced?0:(phase>.72&&phase<.82?Math.sin((phase-.72)/.1*Math.PI):0);
+
+    g.save();
+    eyePath(cx,cy,R*1.34,R*.64,blink);
+    g.clip();
+    g.globalCompositeOperation='lighter';
+    const motion=reduced?0:t;
+    pts.forEach(p=>{
+      const a=p.a+motion*p.s;
+      const x=Math.cos(a)*Math.sin(p.b)*p.r;
+      const y=Math.cos(p.b)*p.r;
+      const z=Math.sin(a)*Math.sin(p.b)*p.r;
+      const scale=.55+(z+1)*.42,alpha=.16+(z+1)*.34;
+      g.beginPath();
+      g.fillStyle=`rgba(255,184,49,${alpha})`;
+      g.arc(cx+x*R,cy+y*R,Math.max(.45,1.65*scale),0,Math.PI*2);
+      g.fill();
+    });
+    g.strokeStyle='rgba(255,183,48,.22)';
+    for(let i=0;i<3;i++){
+      g.beginPath();
+      g.ellipse(cx,cy,R*(.64+i*.13),R*(.17+i*.05)*(1-blink),motion*.00008+i,0,Math.PI*2);
+      g.stroke();
+    }
+    g.beginPath();
+    g.fillStyle='rgba(10,3,5,.78)';
+    g.arc(cx,cy,R*.19*(1-blink*.75),0,Math.PI*2);
+    g.fill();
+    g.restore();
+
+    g.save();
+    g.globalCompositeOperation='screen';
+    g.lineCap='round';
+    g.shadowColor='rgba(224,55,43,.72)';
+    g.shadowBlur=24;
+    g.strokeStyle='rgba(243,102,76,.72)';
+    g.lineWidth=1.35;
+    eyePath(cx,cy,R*1.34,R*.64,blink);
+    g.stroke();
+    g.beginPath();
+    g.fillStyle='rgba(255,229,176,.88)';
+    g.arc(cx-R*.14,cy-R*.14*(1-blink),Math.max(1.5,R*.027*(1-blink)),0,Math.PI*2);
+    g.fill();
+    g.restore();
+
+    if(!reduced)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 const observer=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>observer.observe(e));
 // 읽기 진행도와 현재 구역 표시
 (()=>{const bar=document.querySelector('#readProgress'),links=[...document.querySelectorAll('.links a')],sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);function update(){const max=document.documentElement.scrollHeight-innerHeight,ratio=max>0?scrollY/max:0;bar.style.width=(ratio*100)+'%';let current=sections[0];sections.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.38)current=s});links.forEach(a=>a.classList.toggle('active',current&&a.getAttribute('href')==='#'+current.id))}addEventListener('scroll',update,{passive:true});update()})();

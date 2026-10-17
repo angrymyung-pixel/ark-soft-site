@@ -1,0 +1,210 @@
+{
+  "timezone": "Asia/Seoul",
+  "episodes": [
+    {
+      "id": "1",
+      "releaseAt": "2026-12-25T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "2",
+      "releaseAt": "2026-12-26T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "3",
+      "releaseAt": "2026-12-27T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "4",
+      "releaseAt": "2027-01-01T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "5",
+      "releaseAt": "2027-01-07T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "6",
+      "releaseAt": "2027-01-14T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "6-2",
+      "releaseAt": "2027-01-14T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "7",
+      "releaseAt": "2027-01-21T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "8",
+      "releaseAt": "2027-01-28T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "9",
+      "releaseAt": "2027-02-04T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "10",
+      "releaseAt": "2027-02-11T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "11",
+      "releaseAt": "2027-02-18T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "12",
+      "releaseAt": "2027-02-25T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "13",
+      "releaseAt": "2027-03-04T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "14",
+      "releaseAt": "2027-03-11T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "15",
+      "releaseAt": "2027-03-18T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "16",
+      "releaseAt": "2027-03-25T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "17",
+      "releaseAt": "2027-04-01T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "18",
+      "releaseAt": "2027-04-08T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "19",
+      "releaseAt": "2027-04-15T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "20",
+      "releaseAt": "2027-04-22T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "21",
+      "releaseAt": "2027-04-29T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "22",
+      "releaseAt": "2027-05-06T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "23",
+      "releaseAt": "2027-05-13T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "24",
+      "releaseAt": "2027-05-20T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "25",
+      "releaseAt": "2027-05-27T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "26",
+      "releaseAt": "2027-06-03T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "27",
+      "releaseAt": "2027-06-10T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "28",
+      "releaseAt": "2027-06-17T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "29",
+      "releaseAt": "2027-06-24T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "30",
+      "releaseAt": "2027-07-01T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "31",
+      "releaseAt": "2027-07-08T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "32",
+      "releaseAt": "2027-07-15T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "33",
+      "releaseAt": "2027-07-22T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "34",
+      "releaseAt": "2027-07-29T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "35",
+      "releaseAt": "2027-08-05T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "36",
+      "releaseAt": "2027-08-12T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "37",
+      "releaseAt": "2027-08-19T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "38",
+      "releaseAt": "2027-08-26T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "39",
+      "releaseAt": "2027-09-02T00:00:00+09:00",
+      "ready": true
+    },
+    {
+      "id": "40",
+      "releaseAt": "2027-09-09T00:00:00+09:00",
+      "ready": false
+    }
+  ]
+}

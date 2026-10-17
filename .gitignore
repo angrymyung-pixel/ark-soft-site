@@ -1,2 +1,6 @@
 desktop.ini
 Thumbs.db
+
+site-output/
+__pycache__/
+*.pyc

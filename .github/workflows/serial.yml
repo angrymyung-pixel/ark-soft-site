@@ -1,0 +1,55 @@
+name: Publish scheduled Part I
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # 00:00 KST, with retries. GitHub may delay scheduled jobs.
+    - cron: '0,5,15,30,45 15 * * *'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install PyNaCl==1.6.2
+      - name: Check release boundaries
+        run: python -m unittest discover -s tests -v
+        env:
+          EDITION_KEY: ${{ secrets.EDITION_KEY }}
+      - name: Build due episodes only
+        run: python scripts/build_serial.py
+        env:
+          EDITION_KEY: ${{ secrets.EDITION_KEY }}
+      - name: Keep the daily schedule active
+        if: github.event_name == 'schedule'
+        shell: bash
+        run: |
+          month=$(date -u +%Y-%m)
+          if [ "$(cat .release/heartbeat 2>/dev/null)" != "$month" ]; then
+            printf '%s\n' "$month" > .release/heartbeat
+            git config user.name 'serial-publisher[bot]'
+            git config user.email 'serial-publisher@users.noreply.github.com'
+            git add .release/heartbeat
+            git commit -m 'Keep serial publication schedule active'
+            git push
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site-output
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
